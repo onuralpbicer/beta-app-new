@@ -1,15 +1,20 @@
 {
-    "dev": {
-        "awscloudformation": {
-            "AuthRoleName": "amplify-betaapp-dev-193232-authRole",
-            "UnauthRoleArn": "arn:aws:iam::624681084471:role/amplify-betaapp-dev-193232-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::624681084471:role/amplify-betaapp-dev-193232-authRole",
-            "Region": "eu-central-1",
-            "DeploymentBucketName": "amplify-betaapp-dev-193232-deployment",
-            "UnauthRoleName": "amplify-betaapp-dev-193232-unauthRole",
-            "StackName": "amplify-betaapp-dev-193232",
-            "StackId": "arn:aws:cloudformation:eu-central-1:624681084471:stack/amplify-betaapp-dev-193232/a24c29d0-5798-11ee-a0e1-067aa8fc66e4",
-            "AmplifyAppId": "d3q0jfs1io26ga"
-        }
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-betaapp-dev-193232-authRole",
+      "UnauthRoleArn": "arn:aws:iam::624681084471:role/amplify-betaapp-dev-193232-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::624681084471:role/amplify-betaapp-dev-193232-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-betaapp-dev-193232-deployment",
+      "UnauthRoleName": "amplify-betaapp-dev-193232-unauthRole",
+      "StackName": "amplify-betaapp-dev-193232",
+      "StackId": "arn:aws:cloudformation:eu-central-1:624681084471:stack/amplify-betaapp-dev-193232/a24c29d0-5798-11ee-a0e1-067aa8fc66e4",
+      "AmplifyAppId": "d3q0jfs1io26ga"
+    },
+    "categories": {
+      "auth": {
+        "betaapp224d969e": {}
+      }
     }
+  }
 }
