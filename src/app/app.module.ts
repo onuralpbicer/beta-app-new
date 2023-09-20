@@ -10,6 +10,7 @@ import { StoreModule } from '@ngrx/store'
 import { reducers, metaReducers } from './reducers'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { environment } from 'src/environments/environment'
+import { EffectsModule } from '@ngrx/effects'
 
 @NgModule({
     declarations: [AppComponent],
@@ -19,6 +20,7 @@ import { environment } from 'src/environments/environment'
         AppRoutingModule,
         StoreModule.forRoot(reducers, { metaReducers }),
         !environment.production ? StoreDevtoolsModule.instrument() : [],
+        EffectsModule.forRoot([]),
     ],
     providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
     bootstrap: [AppComponent],
