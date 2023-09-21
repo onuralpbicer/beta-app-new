@@ -52,6 +52,14 @@ const routes: Routes = [
             ),
     },
     {
+        path: 'sync',
+        canActivate: [AuthGuard],
+        loadComponent: () =>
+            import('./sync-page/sync-page.component').then(
+                (m) => m.SyncPageComponent,
+            ),
+    },
+    {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full',
