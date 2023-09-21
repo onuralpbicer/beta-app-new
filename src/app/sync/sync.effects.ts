@@ -17,9 +17,12 @@ import { ISyncState, syncFeature } from './sync.reducer'
 import { SyncService } from '../shared/sync.service'
 import { NavController } from '@ionic/angular'
 import { SettingsActions } from '../settings/settings.actions'
+import { environment } from 'src/environments/environment'
 
 @Injectable()
 export class SyncEffects {
+    private readonly delayTimeout = environment.production ? 1000 : 0
+
     constructor(
         private actions$: Actions,
         private syncStore: Store<ISyncState>,
@@ -30,7 +33,7 @@ export class SyncEffects {
     sync$ = createEffect(() =>
         this.actions$.pipe(
             ofType(SyncActions.syncInit),
-            delay(1000),
+            delay(this.delayTimeout),
             withLatestFrom(
                 this.syncStore.select(syncFeature.selectNextSyncToken),
             ),
@@ -55,7 +58,7 @@ export class SyncEffects {
     syncStart$ = createEffect(() =>
         this.actions$.pipe(
             ofType(SyncActions.syncStart),
-            delay(1000),
+            delay(this.delayTimeout),
             switchMap(({ syncCollection }) =>
                 forkJoin([
                     this.syncService.removeDeletedItems([
@@ -86,7 +89,7 @@ export class SyncEffects {
         () =>
             this.actions$.pipe(
                 ofType(SyncActions.syncComplete),
-                delay(1000),
+                delay(this.delayTimeout),
                 tap(() => {
                     this.navController.navigateForward('home', {
                         replaceUrl: true,
