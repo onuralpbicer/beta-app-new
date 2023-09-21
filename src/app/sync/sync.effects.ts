@@ -16,6 +16,7 @@ import { Store } from '@ngrx/store'
 import { ISyncState, syncFeature } from './sync.reducer'
 import { SyncService } from '../shared/sync.service'
 import { NavController } from '@ionic/angular'
+import { SettingsActions } from '../settings/settings.actions'
 
 @Injectable()
 export class SyncEffects {
@@ -91,6 +92,25 @@ export class SyncEffects {
                         replaceUrl: true,
                     })
                 }),
+            ),
+        {
+            dispatch: false,
+        },
+    )
+
+    changeEnv$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(SettingsActions.changeEnv),
+                switchMap(() =>
+                    this.syncService.clearCache().pipe(
+                        tap(() => {
+                            this.navController.navigateForward('sync', {
+                                replaceUrl: true,
+                            })
+                        }),
+                    ),
+                ),
             ),
         {
             dispatch: false,

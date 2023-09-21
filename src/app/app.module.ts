@@ -15,6 +15,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { environment } from 'src/environments/environment'
 import { EffectsModule } from '@ngrx/effects'
 import { SyncEffects } from './sync/sync.effects'
+import { SettingsEffects } from './settings/settings.effects'
 
 @NgModule({
     declarations: [AppComponent],
@@ -25,7 +26,7 @@ import { SyncEffects } from './sync/sync.effects'
         StoreModule.forRoot(reducers, { metaReducers }),
         !environment.production ? StoreDevtoolsModule.instrument() : [],
         EffectsModule.forRoot([]),
-        EffectsModule.forFeature([SyncEffects]),
+        EffectsModule.forFeature([SyncEffects, SettingsEffects]),
         IonicStorageModule.forRoot({
             driverOrder: [Drivers.IndexedDB, Drivers.LocalStorage],
         }),

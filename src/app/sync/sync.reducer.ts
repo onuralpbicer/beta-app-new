@@ -1,6 +1,7 @@
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store'
 import { SyncActions } from './sync.actions'
 import { equals, includes, not } from 'rambda'
+import { SettingsActions } from '../settings/settings.actions'
 
 export const syncFeatureKey = 'sync'
 
@@ -45,6 +46,9 @@ export const reducer = createReducer(
     on(SyncActions.syncFailure, (state) => ({
         ...state,
         viewStatus: ISyncStatus.Failure,
+    })),
+    on(SettingsActions.changeEnv, () => ({
+        ...initialState,
     })),
 )
 

@@ -6,11 +6,16 @@ import {
     syncReducerSyncKeys,
     reducer as syncReducer,
 } from '../sync/sync.reducer'
+import {
+    reducer as SettingsReducer,
+    settingsFeatureKey,
+} from '../settings/settings.reducer'
 
 export interface State {}
 
 export const reducers: ActionReducerMap<State> = {
     [syncFeatureKey]: syncReducer,
+    [settingsFeatureKey]: SettingsReducer,
 }
 
 function localStorageSyncReducer(
@@ -21,6 +26,7 @@ function localStorageSyncReducer(
             {
                 [syncFeatureKey]: syncReducerSyncKeys,
             },
+            settingsFeatureKey,
         ],
         rehydrate: true,
         storageKeySerializer: (key) => `beta-app-${key}`,
