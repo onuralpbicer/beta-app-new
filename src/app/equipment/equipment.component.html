@@ -1,0 +1,15 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start" defaultHref="home">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title> {{ equipmentName$ | async }} </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <div
+        id="container"
+        [innerHtml]="getHtmlString(equipmentBody$ | async)"
+    ></div>
+</ion-content>

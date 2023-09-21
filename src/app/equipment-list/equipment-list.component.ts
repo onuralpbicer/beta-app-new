@@ -54,7 +54,5 @@ export class EquipmentListComponent implements OnInit {
                 ).pipe(defaultIfEmpty([])),
             ),
         )
-
-        this.equipmentList$.subscribe(console.log)
     }
 }

@@ -68,6 +68,14 @@ const routes: Routes = [
             ),
     },
     {
+        path: 'equipment/:id',
+        canActivate: [AuthGuard],
+        loadComponent: () =>
+            import('./equipment/equipment.component').then(
+                (m) => m.EquipmentComponent,
+            ),
+    },
+    {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full',
