@@ -1,4 +1,10 @@
-import { EntrySkeletonType, SyncCollection, Entry } from 'contentful'
+import {
+    Entry,
+    EntryFieldTypes,
+    EntrySkeletonType,
+    FieldsType,
+    SyncCollection,
+} from 'contentful'
 
 export enum IContentfulEnvs {
     staging = 'staging',
@@ -6,10 +12,43 @@ export enum IContentfulEnvs {
 }
 
 export enum IContentfulContent {
-    EquipmentTypeList = '4Xi1mtiYcpKsR2ZKWLn9mN',
+    EquipmentTypeList = '64du1HBfTqb166SxhWTr33',
 }
 
 export type ISyncCollection = SyncCollection<
     EntrySkeletonType<{}>,
     'WITHOUT_LINK_RESOLUTION'
 >
+
+export type IContentfulEntry<T extends FieldsType> = Entry<
+    EntrySkeletonType<T>,
+    'WITHOUT_LINK_RESOLUTION',
+    string
+>
+export type ExtractType<T extends FieldsType> = IContentfulEntry<T>['fields']
+
+export interface IEquipmentFields {
+    name: EntryFieldTypes.Text
+    body: EntryFieldTypes.RichText
+    maintenanceTasks: EntryFieldTypes.Array<EntryFieldTypes.Symbol>
+}
+
+export type IEquipmentEntry = IContentfulEntry<IEquipmentTypeFields>
+
+export interface IEquipmentTypeFields {
+    name: EntryFieldTypes.Text
+    equipments: EntryFieldTypes.Array<
+        EntryFieldTypes.EntryLink<EntrySkeletonType<IEquipmentFields>>
+    >
+}
+
+export type IEquipmentTypeEntry = IContentfulEntry<IEquipmentTypeFields>
+
+export interface IEquipmentTypeListFields {
+    title: EntryFieldTypes.Text
+    equipmentTypes: EntryFieldTypes.Array<
+        EntryFieldTypes.EntryLink<EntrySkeletonType<IEquipmentTypeFields>>
+    >
+}
+
+export type IEquipmentTypeListEntry = IContentfulEntry<IEquipmentTypeListFields>

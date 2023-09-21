@@ -35,14 +35,23 @@ export class StorageService {
         innerObservable: Observable<T> | (() => Observable<T>),
         timeoutDuration?: number,
     ): Observable<T> {
-        return this.storageReady.pipe(
-            filter(Boolean),
-            take(1),
+        return this.notifyWhenReady(timeoutDuration).pipe(
             switchMap(
                 typeof innerObservable === 'function'
                     ? innerObservable
                     : () => innerObservable,
             ),
+        )
+    }
+
+    public get(key: string) {
+        return this.runWhenReady(from(this._storage.get(key)))
+    }
+
+    public notifyWhenReady(timeoutDuration?: number) {
+        return this.storageReady.pipe(
+            filter(Boolean),
+            take(1),
             timeout({ first: timeoutDuration ?? this.defaultTimeout }),
         )
     }

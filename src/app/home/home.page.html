@@ -1,6 +1,7 @@
 <ion-header [translucent]="true">
     <ion-toolbar>
         <ion-title> Blank </ion-title>
+        <button (click)="logout()">logout</button>
     </ion-toolbar>
 </ion-header>
 
@@ -12,16 +13,8 @@
     </ion-header>
 
     <div id="container">
-        <strong>Ready to create an app?</strong>
-        <p>
-            Start with Ionic
-            <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://ionicframework.com/docs/components"
-                >UI Components</a
-            >
-        </p>
-        <button (click)="logout()">logout</button>
+        <div *ngFor="let listItem of (equipmentTypeList$ | async)">
+            {{ listItem.name }}
+        </div>
     </div>
 </ion-content>

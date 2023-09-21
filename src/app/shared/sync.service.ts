@@ -7,6 +7,7 @@ import {
     DeletedEntry,
     Entry,
     EntrySkeletonType,
+    FieldsType,
     SyncCollection,
     createClient,
 } from 'contentful'
@@ -21,7 +22,11 @@ import {
     take,
 } from 'rxjs'
 import { isNil, isEmpty } from 'rambda'
-import { IContentfulEnvs, ISyncCollection } from './contentful'
+import {
+    IContentfulEntry,
+    IContentfulEnvs,
+    ISyncCollection,
+} from './contentful'
 import { HttpClient } from '@angular/common/http'
 import { blobToString } from './util'
 import { Store } from '@ngrx/store'
@@ -79,6 +84,29 @@ export class SyncService {
             isEmpty(collection.entries) &&
             isEmpty(collection.deletedEntries) &&
             isEmpty(collection.deletedAssets)
+        )
+    }
+
+    private getEntryFields<T extends FieldsType>(
+        entry: IContentfulEntry<T>,
+    ): T {
+        const fieldsWithLocale = entry?.fields ?? {}
+        return Object.entries(fieldsWithLocale).reduce((acc, [key, value]) => {
+            acc[key] = value.hasOwnProperty('en-US') ? value['en-US'] : value
+
+            return acc
+        }, {} as any)
+    }
+
+    public getEntry<T extends FieldsType>(
+        id: string,
+    ): Observable<IContentfulEntry<T>> {
+        return this.storage.get(id).pipe(
+            map((result) => {
+                const entry = JSON.parse(result)
+                const fields = this.getEntryFields<T>(entry)
+                return { ...entry, fields }
+            }),
         )
     }
 

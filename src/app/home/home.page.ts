@@ -3,10 +3,28 @@ import { AuthService } from '../shared/auth.service'
 import { Store } from '@ngrx/store'
 import { ISyncState, syncFeature } from '../sync/sync.reducer'
 import { NavController } from '@ionic/angular'
-import { filter, take } from 'rxjs'
+import {
+    Observable,
+    defaultIfEmpty,
+    filter,
+    forkJoin,
+    map,
+    switchMap,
+    take,
+    tap,
+} from 'rxjs'
 import { SettingsActions } from '../settings/settings.actions'
-import { IContentfulEnvs } from '../shared/contentful'
+import {
+    ExtractType,
+    IContentfulContent,
+    IContentfulEnvs,
+    IEquipmentTypeFields,
+    IEquipmentTypeListEntry,
+    IEquipmentTypeListFields,
+} from '../shared/contentful'
 import { environment } from 'src/environments/environment'
+import { SyncService } from '../shared/sync.service'
+import { StorageService } from '../shared/storage.service'
 
 @Component({
     selector: 'app-home',
@@ -14,10 +32,14 @@ import { environment } from 'src/environments/environment'
     styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
+    public equipmentTypeList$!: Observable<ExtractType<IEquipmentTypeFields>[]>
+
     constructor(
         private authService: AuthService,
         private syncStore: Store<ISyncState>,
         private navController: NavController,
+        private syncService: SyncService,
+        private storageService: StorageService,
     ) {}
 
     ngOnInit(): void {
@@ -34,6 +56,23 @@ export class HomePage implements OnInit {
                     replaceUrl: true,
                 })
             })
+
+        this.equipmentTypeList$ = this.syncService
+            .getEntry<IEquipmentTypeListFields>(
+                IContentfulContent.EquipmentTypeList,
+            )
+            .pipe(
+                map((entry) => entry.fields.equipmentTypes),
+                switchMap((list) =>
+                    forkJoin(
+                        list.map((item) =>
+                            this.syncService
+                                .getEntry<IEquipmentTypeFields>(item.sys.id)
+                                .pipe(map((entry) => entry.fields)),
+                        ),
+                    ).pipe(defaultIfEmpty([])),
+                ),
+            )
     }
 
     logout() {
