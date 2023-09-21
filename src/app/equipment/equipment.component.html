@@ -8,8 +8,5 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-    <div
-        id="container"
-        [innerHtml]="getHtmlString(equipmentBody$ | async)"
-    ></div>
+    <div id="container" [innerHtml]="equipmentBody$ | async"></div>
 </ion-content>

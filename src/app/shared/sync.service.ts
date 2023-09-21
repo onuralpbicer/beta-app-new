@@ -98,6 +98,10 @@ export class SyncService {
         }, {} as any)
     }
 
+    public getAsset(id: string): Observable<string> {
+        return this.storage.get(id)
+    }
+
     public getEntry<T extends FieldsType>(
         id: string,
     ): Observable<IContentfulEntry<T>> {
