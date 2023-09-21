@@ -33,7 +33,7 @@ export interface IEquipmentFields {
     maintenanceTasks: EntryFieldTypes.Array<EntryFieldTypes.Symbol>
 }
 
-export type IEquipmentEntry = IContentfulEntry<IEquipmentTypeFields>
+export type IEquipmentEntry = IContentfulEntry<IEquipmentFields>
 
 export interface IEquipmentTypeFields {
     name: EntryFieldTypes.Text

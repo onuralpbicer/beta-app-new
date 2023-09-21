@@ -18,6 +18,7 @@ import {
     ExtractType,
     IContentfulContent,
     IContentfulEnvs,
+    IEquipmentTypeEntry,
     IEquipmentTypeFields,
     IEquipmentTypeListEntry,
     IEquipmentTypeListFields,
@@ -32,7 +33,7 @@ import { StorageService } from '../shared/storage.service'
     styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-    public equipmentTypeList$!: Observable<ExtractType<IEquipmentTypeFields>[]>
+    public equipmentTypeList$!: Observable<IEquipmentTypeEntry[]>
 
     constructor(
         private authService: AuthService,
@@ -66,13 +67,15 @@ export class HomePage implements OnInit {
                 switchMap((list) =>
                     forkJoin(
                         list.map((item) =>
-                            this.syncService
-                                .getEntry<IEquipmentTypeFields>(item.sys.id)
-                                .pipe(map((entry) => entry.fields)),
+                            this.syncService.getEntry<IEquipmentTypeFields>(
+                                item.sys.id,
+                            ),
                         ),
                     ).pipe(defaultIfEmpty([])),
                 ),
             )
+
+        this.equipmentTypeList$.subscribe(console.log)
     }
 
     logout() {

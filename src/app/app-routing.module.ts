@@ -60,6 +60,14 @@ const routes: Routes = [
             ),
     },
     {
+        path: 'equipment-list/:id',
+        canActivate: [AuthGuard],
+        loadComponent: () =>
+            import('./equipment-list/equipment-list.component').then(
+                (m) => m.EquipmentListComponent,
+            ),
+    },
+    {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full',
