@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core'
-import { DataStore, SortDirection } from 'aws-amplify'
+import {
+    DataStore,
+    SortDirection,
+    syncExpression,
+    Predicates,
+} from 'aws-amplify'
 import { Maintenance } from 'src/models'
 import { IMaintenanceTask } from '../maintenance/model'
 
@@ -8,7 +13,11 @@ import { IMaintenanceTask } from '../maintenance/model'
 })
 export class DatastoreService {
     constructor() {
-        DataStore.configure()
+        DataStore.configure({
+            syncExpressions: [
+                syncExpression(Maintenance, () => Predicates.ALL),
+            ],
+        })
     }
 
     async init() {
