@@ -70,7 +70,10 @@
         </div>
     </ng-container>
 
-    <ion-button (click)="submit()" expand="block" [disabled]="form.invalid"
+    <ion-button
+        (click)="submit()"
+        expand="block"
+        [disabled]="form.invalid || submitting"
         >Gönder</ion-button
     >
 </ion-content>

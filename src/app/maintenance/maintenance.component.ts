@@ -2,7 +2,16 @@ import { CommonModule } from '@angular/common'
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, RouterModule } from '@angular/router'
 import { IonicModule } from '@ionic/angular'
-import { Subscription, filter, map, switchMap } from 'rxjs'
+import {
+    Subscription,
+    combineLatest,
+    filter,
+    from,
+    map,
+    switchMap,
+    take,
+    withLatestFrom,
+} from 'rxjs'
 import { SyncService } from '../shared/sync.service'
 import { IEquipmentFields } from '../shared/contentful'
 import {
@@ -13,6 +22,9 @@ import {
     Validators,
 } from '@angular/forms'
 import { IMaintenanceTask } from './model'
+import { Maintenance } from 'src/models'
+import { AuthService } from '../shared/auth.service'
+import { DatastoreService } from '../shared/datastore.service'
 
 @Component({
     selector: 'app-maintenance',
@@ -27,10 +39,14 @@ export class MaintenanceComponent implements OnInit, OnDestroy {
 
     public equipment$$?: Subscription
 
+    public submitting = false
+
     constructor(
         private syncService: SyncService,
         private activatedRoute: ActivatedRoute,
         private fb: FormBuilder,
+        private authService: AuthService,
+        private datastore: DatastoreService,
     ) {}
 
     ngOnInit(): void {
@@ -94,7 +110,35 @@ export class MaintenanceComponent implements OnInit, OnDestroy {
     }
 
     submit() {
-        console.log('submit')
+        if (this.form.invalid || this.submitting) {
+            return
+        }
+
+        this.submitting = true
+        combineLatest([
+            this.activatedRoute.paramMap.pipe(
+                map((params) => params.get('id')),
+                filter(Boolean),
+                take(1),
+            ),
+            from(this.authService.getUserId()),
+        ])
+            .pipe(
+                switchMap(([equipmentId, username]) =>
+                    this.datastore.createMaintenance(equipmentId, [], username),
+                ),
+            )
+            .subscribe({
+                next: () => {
+                    console.log('success')
+                },
+                error: (error) => {
+                    console.error(error)
+                },
+                complete: () => {
+                    this.submitting = false
+                },
+            })
     }
 
     get maintenanceTasks() {

@@ -3,6 +3,7 @@ import { Auth, Hub } from 'aws-amplify'
 import { CognitoUser } from 'amazon-cognito-identity-js'
 import { NavController } from '@ionic/angular'
 import { CUSTOM_CHANNEL } from './types'
+import { DatastoreService } from './datastore.service'
 
 const requiresNewPasswordEvent = 'require-new-password'
 
@@ -10,21 +11,27 @@ const requiresNewPasswordEvent = 'require-new-password'
     providedIn: 'root',
 })
 export class AuthService {
-    constructor(private navContoller: NavController) {
-        Hub.listen('auth', ({ payload: { event, data } }) => {
+    constructor(
+        private navContoller: NavController,
+        private datastore: DatastoreService,
+    ) {
+        Hub.listen('auth', async ({ payload: { event, data } }) => {
             console.log('hub event', 'auth', event, data)
             switch (event) {
                 case 'signIn':
+                    await this.datastore.init()
                     this.navContoller.navigateForward('home', {
                         replaceUrl: true,
                     })
                     break
 
                 case 'signIn_failure':
+                    await this.datastore.stop()
                     this.navContoller.navigateBack('login')
                     break
 
                 case 'signOut':
+                    await this.datastore.stop()
                     this.navContoller.navigateBack('login')
                     break
             }
@@ -95,7 +102,12 @@ export class AuthService {
         return user
     }
 
-    public async getCurrentUser() {
+    public async getCurrentUser(): Promise<CognitoUser> {
         return Auth.currentAuthenticatedUser()
+    }
+
+    public async getUserId() {
+        const user = await this.getCurrentUser()
+        return user.getUsername()
     }
 }
