@@ -52,6 +52,7 @@ export class MaintenanceComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.form = this.fb.group({
             type: [null, Validators.required],
+            comments: [undefined],
             maintenanceTasks: this.fb.array<IMaintenanceTask>([]),
         })
 
@@ -130,7 +131,7 @@ export class MaintenanceComponent implements OnInit, OnDestroy {
                         [],
                         username,
                         this.form.value['type'],
-                        'example comment',
+                        this.form.value['comments'] || undefined,
                     ),
                 ),
             )
