@@ -18,6 +18,7 @@ import { SyncService } from '../shared/sync.service'
 import { NavController } from '@ionic/angular'
 import { SettingsActions } from '../settings/settings.actions'
 import { environment } from 'src/environments/environment'
+import { ActivatedRoute } from '@angular/router'
 
 @Injectable()
 export class SyncEffects {
@@ -28,6 +29,7 @@ export class SyncEffects {
         private syncStore: Store<ISyncState>,
         private syncService: SyncService,
         private navController: NavController,
+        private activatedRoute: ActivatedRoute,
     ) {}
 
     sync$ = createEffect(() =>
@@ -90,8 +92,13 @@ export class SyncEffects {
             this.actions$.pipe(
                 ofType(SyncActions.syncComplete),
                 delay(this.delayTimeout),
-                tap(() => {
-                    this.navController.navigateForward('home', {
+                withLatestFrom(
+                    this.activatedRoute.queryParamMap.pipe(
+                        map((params) => params.get('redirectTo')),
+                    ),
+                ),
+                tap(([, redirectTo]) => {
+                    this.navController.navigateForward(redirectTo || 'home', {
                         replaceUrl: true,
                     })
                 }),

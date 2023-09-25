@@ -15,17 +15,14 @@ import {
 } from 'rxjs'
 import { SettingsActions } from '../settings/settings.actions'
 import {
-    ExtractType,
     IContentfulContent,
     IContentfulEnvs,
     IEquipmentTypeEntry,
     IEquipmentTypeFields,
-    IEquipmentTypeListEntry,
     IEquipmentTypeListFields,
 } from '../shared/contentful'
 import { environment } from 'src/environments/environment'
 import { SyncService } from '../shared/sync.service'
-import { StorageService } from '../shared/storage.service'
 
 @Component({
     selector: 'app-home',
@@ -38,9 +35,7 @@ export class HomePage implements OnInit {
     constructor(
         private authService: AuthService,
         private syncStore: Store<ISyncState>,
-        private navController: NavController,
         private syncService: SyncService,
-        private storageService: StorageService,
     ) {}
 
     ngOnInit(): void {
@@ -48,15 +43,6 @@ export class HomePage implements OnInit {
             ;(window as any).test = (env: IContentfulEnvs) =>
                 this.syncStore.dispatch(SettingsActions.changeEnv({ env }))
         }
-
-        this.syncStore
-            .select(syncFeature.selectSyncInitial)
-            .pipe(take(1), filter(Boolean))
-            .subscribe(() => {
-                this.navController.navigateForward('sync', {
-                    replaceUrl: true,
-                })
-            })
 
         this.equipmentTypeList$ = this.syncService
             .getEntry<IEquipmentTypeListFields>(
