@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { Location } from '@angular/common'
 import { AuthService } from '../shared/auth.service'
 import { Store } from '@ngrx/store'
 import { ISyncState, syncFeature } from '../sync/sync.reducer'
@@ -36,6 +37,8 @@ export class HomePage implements OnInit {
         private authService: AuthService,
         private syncStore: Store<ISyncState>,
         private syncService: SyncService,
+        private navController: NavController,
+        private location: Location,
     ) {}
 
     ngOnInit(): void {
@@ -43,6 +46,21 @@ export class HomePage implements OnInit {
             ;(window as any).test = (env: IContentfulEnvs) =>
                 this.syncStore.dispatch(SettingsActions.changeEnv({ env }))
         }
+
+        this.syncStore
+            .select(syncFeature.selectSyncInitial)
+            .pipe(take(1), filter(Boolean))
+            .subscribe(() => {
+                const params = new URLSearchParams({
+                    redirectTo: this.location.path(),
+                })
+                this.navController.navigateForward(
+                    'sync' + `?${params.toString()}`,
+                    {
+                        replaceUrl: true,
+                    },
+                )
+            })
 
         this.equipmentTypeList$ = this.syncService
             .getEntry<IEquipmentTypeListFields>(
