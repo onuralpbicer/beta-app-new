@@ -5,13 +5,10 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-    <div id="container">
-        <div
-            *ngFor="let listItem of (equipmentTypeList$ | async)"
-            [routerLink]="['/equipment-list', listItem.sys.id]"
-        >
-            {{ listItem.fields.name }}
-        </div>
-    </div>
+<ion-content [fullscreen]="true" [forceOverscroll]="false" class="ion-padding">
+    <app-list-item
+        *ngFor="let listItem of (equipmentTypeList$ | async)"
+        [routerLink]="['/equipment-list', listItem.sys.id]"
+        [title]="listItem.fields.name"
+    />
 </ion-content>

@@ -17,13 +17,14 @@ import {
     IEquipmentTypeFields,
 } from '../shared/contentful'
 import { IonicModule } from '@ionic/angular'
+import { ListItemComponent } from '../list-item/list-item.component'
 
 @Component({
     selector: 'app-equipment-list',
     templateUrl: './equipment-list.component.html',
     styleUrls: ['./equipment-list.component.scss'],
     standalone: true,
-    imports: [CommonModule, IonicModule, RouterModule],
+    imports: [CommonModule, IonicModule, RouterModule, ListItemComponent],
 })
 export class EquipmentListComponent implements OnInit {
     public equipmentType$!: Observable<IEquipmentTypeEntry>
