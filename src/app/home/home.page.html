@@ -1,7 +1,11 @@
 <ion-header [translucent]="true">
     <ion-toolbar>
-        <ion-title> Blank </ion-title>
-        <button (click)="logout()">logout</button>
+        <ion-buttons slot="start">
+            <ion-button (click)="logout()">
+                <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title> Ekipman Türleri </ion-title>
     </ion-toolbar>
 </ion-header>
 

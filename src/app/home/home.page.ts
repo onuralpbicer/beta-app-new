@@ -3,7 +3,7 @@ import { Location } from '@angular/common'
 import { AuthService } from '../shared/auth.service'
 import { Store } from '@ngrx/store'
 import { ISyncState, syncFeature } from '../sync/sync.reducer'
-import { NavController } from '@ionic/angular'
+import { AlertController, NavController } from '@ionic/angular'
 import {
     Observable,
     defaultIfEmpty,
@@ -39,6 +39,7 @@ export class HomePage implements OnInit {
         private syncService: SyncService,
         private navController: NavController,
         private location: Location,
+        private alertController: AlertController,
     ) {}
 
     ngOnInit(): void {
@@ -82,7 +83,26 @@ export class HomePage implements OnInit {
         this.equipmentTypeList$.subscribe(console.log)
     }
 
-    logout() {
-        this.authService.logout()
+    async logout() {
+        const alert = await this.alertController.create({
+            header: 'Çıkış',
+            message: 'Çıkış yapmak istediğinize emin misiniz?',
+            buttons: [
+                { text: 'Çıkış', role: 'Confirm' },
+                {
+                    role: 'Cancel',
+                    text: 'İptal',
+                },
+            ],
+            cssClass: 'alert',
+        })
+
+        await alert.present()
+
+        const { role } = await alert.onWillDismiss()
+
+        if (role === 'Confirm') {
+            this.authService.logout()
+        }
     }
 }
