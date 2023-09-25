@@ -15,6 +15,8 @@ type EagerMaintenance = {
   readonly timestamp: string;
   readonly tasks: string;
   readonly createdBy: string;
+  readonly maintenanceType: string;
+  readonly comments?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -28,6 +30,8 @@ type LazyMaintenance = {
   readonly timestamp: string;
   readonly tasks: string;
   readonly createdBy: string;
+  readonly maintenanceType: string;
+  readonly comments?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

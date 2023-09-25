@@ -125,7 +125,13 @@ export class MaintenanceComponent implements OnInit, OnDestroy {
         ])
             .pipe(
                 switchMap(([equipmentId, username]) =>
-                    this.datastore.createMaintenance(equipmentId, [], username),
+                    this.datastore.createMaintenance(
+                        equipmentId,
+                        [],
+                        username,
+                        this.form.value['type'],
+                        'example comment',
+                    ),
                 ),
             )
             .subscribe({

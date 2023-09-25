@@ -31,6 +31,20 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "maintenanceType": {
+                    "name": "maintenanceType",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "comments": {
+                    "name": "comments",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -92,5 +106,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "ae2b0abf866f1726c73af838c3d46089"
+    "version": "dde818480a9a005640a2b17de1ddcb48"
 };
