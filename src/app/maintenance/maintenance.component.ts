@@ -128,7 +128,7 @@ export class MaintenanceComponent implements OnInit, OnDestroy {
                 switchMap(([equipmentId, username]) =>
                     this.datastore.createMaintenance(
                         equipmentId,
-                        [],
+                        this.form.value['maintenanceTasks'],
                         username,
                         this.form.value['type'],
                         this.form.value['comments'] || undefined,
