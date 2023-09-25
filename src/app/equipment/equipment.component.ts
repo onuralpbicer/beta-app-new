@@ -73,8 +73,6 @@ export class EquipmentComponent implements OnInit {
                 this.datastore.getMaintenanceList(equipmentId),
             ),
         )
-
-        this.maintenance$.subscribe(console.log)
     }
 
     public goToMaintenance() {
