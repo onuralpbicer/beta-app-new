@@ -2,3 +2,5 @@
 /dist
 /coverage
 .angular
+amplify/backend/backend-config.json
+amplify/team-provider-info.json
