@@ -4,3 +4,8 @@
 .angular
 amplify/backend/backend-config.json
 amplify/team-provider-info.json
+.graphqlconfig.yml
+amplify/\.config/project-config.json
+amplify/backend/types/*.d.types
+src/aps/API.service.types
+src/graphql/*

@@ -1,0 +1,89 @@
+# this is an auto generated file. This will be overwritten
+
+query GetMaintenance($equipmentId: ID!, $timestamp: AWSDateTime!) {
+  getMaintenance(equipmentId: $equipmentId, timestamp: $timestamp) {
+    equipmentId
+    timestamp
+    tasks
+    createdBy
+    maintenanceType
+    comments
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    owner
+    __typename
+  }
+}
+
+query ListMaintenances(
+  $equipmentId: ID
+  $timestamp: ModelStringKeyConditionInput
+  $filter: ModelMaintenanceFilterInput
+  $limit: Int
+  $nextToken: String
+  $sortDirection: ModelSortDirection
+) {
+  listMaintenances(
+    equipmentId: $equipmentId
+    timestamp: $timestamp
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    sortDirection: $sortDirection
+  ) {
+    items {
+      equipmentId
+      timestamp
+      tasks
+      createdBy
+      maintenanceType
+      comments
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+      __typename
+    }
+    nextToken
+    startedAt
+    __typename
+  }
+}
+
+query SyncMaintenances(
+  $filter: ModelMaintenanceFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncMaintenances(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      equipmentId
+      timestamp
+      tasks
+      createdBy
+      maintenanceType
+      comments
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+      __typename
+    }
+    nextToken
+    startedAt
+    __typename
+  }
+}

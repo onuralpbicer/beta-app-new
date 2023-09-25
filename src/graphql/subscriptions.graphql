@@ -1,0 +1,61 @@
+# this is an auto generated file. This will be overwritten
+
+subscription OnCreateMaintenance(
+  $filter: ModelSubscriptionMaintenanceFilterInput
+) {
+  onCreateMaintenance(filter: $filter) {
+    equipmentId
+    timestamp
+    tasks
+    createdBy
+    maintenanceType
+    comments
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    owner
+    __typename
+  }
+}
+
+subscription OnUpdateMaintenance(
+  $filter: ModelSubscriptionMaintenanceFilterInput
+) {
+  onUpdateMaintenance(filter: $filter) {
+    equipmentId
+    timestamp
+    tasks
+    createdBy
+    maintenanceType
+    comments
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    owner
+    __typename
+  }
+}
+
+subscription OnDeleteMaintenance(
+  $filter: ModelSubscriptionMaintenanceFilterInput
+) {
+  onDeleteMaintenance(filter: $filter) {
+    equipmentId
+    timestamp
+    tasks
+    createdBy
+    maintenanceType
+    comments
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    owner
+    __typename
+  }
+}

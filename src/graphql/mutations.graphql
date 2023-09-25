@@ -1,0 +1,64 @@
+# this is an auto generated file. This will be overwritten
+
+mutation CreateMaintenance(
+  $input: CreateMaintenanceInput!
+  $condition: ModelMaintenanceConditionInput
+) {
+  createMaintenance(input: $input, condition: $condition) {
+    equipmentId
+    timestamp
+    tasks
+    createdBy
+    maintenanceType
+    comments
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    owner
+    __typename
+  }
+}
+
+mutation UpdateMaintenance(
+  $input: UpdateMaintenanceInput!
+  $condition: ModelMaintenanceConditionInput
+) {
+  updateMaintenance(input: $input, condition: $condition) {
+    equipmentId
+    timestamp
+    tasks
+    createdBy
+    maintenanceType
+    comments
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    owner
+    __typename
+  }
+}
+
+mutation DeleteMaintenance(
+  $input: DeleteMaintenanceInput!
+  $condition: ModelMaintenanceConditionInput
+) {
+  deleteMaintenance(input: $input, condition: $condition) {
+    equipmentId
+    timestamp
+    tasks
+    createdBy
+    maintenanceType
+    comments
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    owner
+    __typename
+  }
+}
