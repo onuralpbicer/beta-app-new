@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core'
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
 import { ViewStatus } from '../shared/types'
 import { AuthService } from '../shared/auth.service'
+import { IonicModule } from '@ionic/angular'
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
     standalone: true,
-    imports: [ReactiveFormsModule],
+    imports: [IonicModule, ReactiveFormsModule],
 })
 export class LoginComponent implements OnInit {
     public viewStatus = ViewStatus.INITIAL

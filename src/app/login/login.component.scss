@@ -1,0 +1,17 @@
+ion-content::part(scroll) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    padding: 4rem;
+}
+
+form {
+    * {
+        margin-bottom: 0.5rem;
+    }
+
+    ion-button::part(native) {
+        padding-block: 1rem;
+    }
+}

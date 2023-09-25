@@ -1,6 +1,21 @@
-<h1>Login</h1>
-<form [formGroup]="form" (ngSubmit)="submit()">
-    <input formControlName="username" />
-    <input formControlName="password" />
-    <button>Submit</button>
-</form>
+<ion-content [forceOverscroll]="false">
+    <img src="/assets/logo.png" />
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <ion-item>
+            <ion-input
+                label="Kullanıcı Adı"
+                formControlName="username"
+                labelPlacement="floating"
+            ></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-input
+                label="Şifre"
+                formControlName="password"
+                type="password"
+                labelPlacement="floating"
+            ></ion-input>
+        </ion-item>
+        <ion-button type="submit" expand="block">Submit</ion-button>
+    </form>
+</ion-content>
