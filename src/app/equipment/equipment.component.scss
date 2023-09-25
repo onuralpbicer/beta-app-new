@@ -1,0 +1,22 @@
+.container {
+    table {
+        --border-width: 1px;
+        --border-color: white;
+        border: var(--border-width) solid var(--border-color);
+        tbody {
+            tr {
+                &:nth-of-type(odd) {
+                    background: grey;
+                }
+
+                td {
+                    border: var(--border-width) solid var(--border-color);
+                    padding: 1rem 0.2rem;
+                    &:not(:first-of-type) {
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
+}

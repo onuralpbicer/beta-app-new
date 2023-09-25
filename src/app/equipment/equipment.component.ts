@@ -1,4 +1,10 @@
-import { Component, OnInit, Pipe, PipeTransform } from '@angular/core'
+import {
+    Component,
+    OnInit,
+    Pipe,
+    PipeTransform,
+    ViewEncapsulation,
+} from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { SyncService } from '../shared/sync.service'
 import { ActivatedRoute, RouterModule } from '@angular/router'
@@ -19,16 +25,6 @@ import {
     IEquipmentTypeFields,
 } from '../shared/contentful'
 import { IonicModule } from '@ionic/angular'
-import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
-import {
-    AssetLinkBlock,
-    BLOCKS,
-    Block,
-    Document,
-    Inline,
-    Node,
-    Text,
-} from '@contentful/rich-text-types'
 
 @Component({
     selector: 'app-equipment',
@@ -36,6 +32,7 @@ import {
     styleUrls: ['./equipment.component.scss'],
     standalone: true,
     imports: [CommonModule, IonicModule, RouterModule],
+    encapsulation: ViewEncapsulation.None,
 })
 export class EquipmentComponent implements OnInit {
     public equipmentName$!: Observable<string>
@@ -56,68 +53,10 @@ export class EquipmentComponent implements OnInit {
 
         this.equipmentBody$ = this.equipment$.pipe(
             map((equipment) => equipment.fields.body),
-            switchMap((body) => {
-                const embeddedAssetNodes: AssetLinkBlock[] = []
-                function checkContentOfNode(node: Block | Inline) {
-                    if (node.nodeType === BLOCKS.EMBEDDED_ASSET) {
-                        embeddedAssetNodes.push(node as AssetLinkBlock)
-                    } else {
-                        node?.content?.forEach((node) => {
-                            checkContentOfNode(node as Block | Inline)
-                        })
-                    }
-                }
-                checkContentOfNode(body)
-                return forkJoin(
-                    embeddedAssetNodes
-                        .map((node) => node.data.target.sys.id)
-                        .map((assetId) =>
-                            this.syncService
-                                .getAsset(assetId)
-                                .pipe(
-                                    map((assetValue): [string, string] => [
-                                        assetId,
-                                        assetValue,
-                                    ]),
-                                ),
-                        ),
-                ).pipe(
-                    defaultIfEmpty([] as [string, string][]),
-                    map((assets) => new Map(assets)),
-                    map((assetsMap) => {
-                        return documentToHtmlString(body, {
-                            renderNode: {
-                                [BLOCKS.EMBEDDED_ASSET]: (node) => {
-                                    if (
-                                        node.nodeType !== BLOCKS.EMBEDDED_ASSET
-                                    ) {
-                                        return ''
-                                    }
-
-                                    const assetNode = node as AssetLinkBlock
-
-                                    const assetId = assetNode.data.target.sys.id
-                                    const assetImg = assetsMap.get(assetId)
-
-                                    return `<img src=${assetImg}>`
-                                },
-                            },
-                        })
-                    }),
-                )
-            }),
         )
 
         this.equipmentName$ = this.equipment$.pipe(
             map((equipment) => equipment.fields.name),
         )
-    }
-
-    public getHtmlString(doc: Document | null) {
-        if (doc === undefined || doc === null || doc.nodeType !== 'document') {
-            return '<p></p>'
-        }
-
-        return documentToHtmlString(doc)
     }
 }

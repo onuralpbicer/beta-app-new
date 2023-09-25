@@ -29,7 +29,7 @@ export type ExtractType<T extends FieldsType> = IContentfulEntry<T>['fields']
 
 export interface IEquipmentFields {
     name: EntryFieldTypes.Text
-    body: EntryFieldTypes.RichText
+    body: EntryFieldTypes.Text
     maintenanceTasks: EntryFieldTypes.Array<EntryFieldTypes.Symbol>
 }
 
