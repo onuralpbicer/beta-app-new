@@ -1,35 +1,10 @@
-import { NgModule, inject } from '@angular/core'
+import { NgModule } from '@angular/core'
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router'
 import {
-    CanActivateFn,
-    PreloadAllModules,
-    Router,
-    RouterModule,
-    Routes,
-} from '@angular/router'
-import { AuthService } from './shared/auth.service'
-
-const HasCognitoUserGuard: CanActivateFn = (route, snapshot) => {
-    const authService = inject(AuthService)
-    const router = inject(Router)
-
-    if (authService.enableNewPassword) {
-        return true
-    }
-    return router.createUrlTree(['login'])
-}
-
-const AuthGuard: CanActivateFn = async () => {
-    const authService = inject(AuthService)
-    const router = inject(Router)
-
-    try {
-        await authService.getCurrentUser()
-
-        return true
-    } catch (error) {
-        return router.createUrlTree(['login'])
-    }
-}
+    AuthGuard,
+    ContentfulExistsGuard,
+    HasCognitoUserGuard,
+} from './shared/guards'
 
 const routes: Routes = [
     {
@@ -61,7 +36,7 @@ const routes: Routes = [
     },
     {
         path: 'equipment-list/:id',
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard, ContentfulExistsGuard],
         loadComponent: () =>
             import('./equipment-list/equipment-list.component').then(
                 (m) => m.EquipmentListComponent,
@@ -69,7 +44,7 @@ const routes: Routes = [
     },
     {
         path: 'equipment/:id',
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard, ContentfulExistsGuard],
         loadComponent: () =>
             import('./equipment/equipment.component').then(
                 (m) => m.EquipmentComponent,
