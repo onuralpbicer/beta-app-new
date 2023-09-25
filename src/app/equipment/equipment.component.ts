@@ -28,13 +28,14 @@ import {
 import { IonicModule, NavController } from '@ionic/angular'
 import { DatastoreService } from '../shared/datastore.service'
 import { LazyMaintenance } from 'src/models'
+import { ListItemComponent } from '../list-item/list-item.component'
 
 @Component({
     selector: 'app-equipment',
     templateUrl: './equipment.component.html',
     styleUrls: ['./equipment.component.scss'],
     standalone: true,
-    imports: [CommonModule, IonicModule, RouterModule],
+    imports: [CommonModule, IonicModule, RouterModule, ListItemComponent],
     encapsulation: ViewEncapsulation.None,
 })
 export class EquipmentComponent implements OnInit {

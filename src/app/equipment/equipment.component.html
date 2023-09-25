@@ -18,10 +18,13 @@
         </ion-button>
     </div>
 
-    <div
-        class="maintenance-item"
+    <app-list-item
         *ngFor="let maintenance of maintenance$ | async"
+        [title]="
+            (maintenance.timestamp | date : 'dd/MM/yyyy HH:mm') +
+            ' - ' +
+            maintenance.createdBy
+        "
     >
-        {{ maintenance.timestamp }} {{ maintenance.createdBy }}
-    </div>
+    </app-list-item>
 </ion-content>
