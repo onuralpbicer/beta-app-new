@@ -51,6 +51,19 @@ const routes: Routes = [
             ),
     },
     {
+        path: 'maintenance/:id',
+        canActivate: [AuthGuard, ContentfulExistsGuard],
+        children: [
+            {
+                path: '',
+                loadComponent: () =>
+                    import('./maintenance/maintenance.component').then(
+                        (m) => m.MaintenanceComponent,
+                    ),
+            },
+        ],
+    },
+    {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full',

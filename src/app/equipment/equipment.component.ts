@@ -16,6 +16,7 @@ import {
     from,
     map,
     switchMap,
+    take,
     tap,
 } from 'rxjs'
 import {
@@ -24,7 +25,7 @@ import {
     IEquipmentTypeEntry,
     IEquipmentTypeFields,
 } from '../shared/contentful'
-import { IonicModule } from '@ionic/angular'
+import { IonicModule, NavController } from '@ionic/angular'
 
 @Component({
     selector: 'app-equipment',
@@ -42,6 +43,7 @@ export class EquipmentComponent implements OnInit {
     constructor(
         private syncService: SyncService,
         private activatedRoute: ActivatedRoute,
+        private navController: NavController,
     ) {}
 
     ngOnInit(): void {
@@ -58,5 +60,16 @@ export class EquipmentComponent implements OnInit {
         this.equipmentName$ = this.equipment$.pipe(
             map((equipment) => equipment.fields.name),
         )
+    }
+
+    public goToMaintenance() {
+        this.activatedRoute.paramMap
+            .pipe(
+                map((params) => params.get('id')),
+                take(1),
+            )
+            .subscribe((id) => {
+                this.navController.navigateForward(['/maintenance', id])
+            })
     }
 }

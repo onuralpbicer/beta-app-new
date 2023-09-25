@@ -8,5 +8,13 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-    <div class="container" [innerHtml]="equipmentBody$ | async"></div>
+    <h2>Özellikler</h2>
+    <!-- <div class="container" [innerHtml]="equipmentBody$ | async"></div> -->
+
+    <div class="maintenance-container">
+        <h2>Bakımlar</h2>
+        <ion-button class="add-maintenance" (click)="goToMaintenance()">
+            <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+        </ion-button>
+    </div>
 </ion-content>
