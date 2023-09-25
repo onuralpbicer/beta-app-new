@@ -45,7 +45,7 @@ export class StorageService {
     }
 
     public get(key: string) {
-        return this.runWhenReady(from(this._storage.get(key)))
+        return this.runWhenReady(() => from(this._storage.get(key)))
     }
 
     public notifyWhenReady(timeoutDuration?: number) {
@@ -57,7 +57,7 @@ export class StorageService {
     }
 
     public set(key: string, value: string) {
-        return this.runWhenReady(from(this._storage.set(key, value)))
+        return this.runWhenReady(() => from(this._storage.set(key, value)))
     }
 
     public remove(key: string) {
