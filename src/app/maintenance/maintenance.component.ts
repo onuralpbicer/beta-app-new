@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common'
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, RouterModule } from '@angular/router'
-import { IonicModule } from '@ionic/angular'
+import { IonicModule, NavController } from '@ionic/angular'
 import {
     Subscription,
     combineLatest,
@@ -47,6 +47,7 @@ export class MaintenanceComponent implements OnInit, OnDestroy {
         private fb: FormBuilder,
         private authService: AuthService,
         private datastore: DatastoreService,
+        private navController: NavController,
     ) {}
 
     ngOnInit(): void {
@@ -138,6 +139,7 @@ export class MaintenanceComponent implements OnInit, OnDestroy {
             .subscribe({
                 next: () => {
                     console.log('success')
+                    this.navController.back()
                 },
                 error: (error) => {
                     console.error(error)
