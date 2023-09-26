@@ -1,1 +1,13 @@
-<h1>{{ syncStatus$ | async }}</h1>
+<div class="container">
+    <ion-spinner *ngIf="isLoading$ | async"></ion-spinner>
+
+    <ng-container *ngIf="(syncStatus$ | async) === SyncStatus.Success">
+        <ion-text>Sync successful</ion-text>
+        <ion-icon name="checkmark-outline"></ion-icon>
+    </ng-container>
+
+    <ng-container *ngIf="(syncStatus$ | async) === SyncStatus.Failure">
+        <ion-text>Sync failed, please try again later</ion-text>
+        <ion-icon name="close-outline"></ion-icon>
+    </ng-container>
+</div>
