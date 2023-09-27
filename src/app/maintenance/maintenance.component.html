@@ -82,6 +82,11 @@
         (click)="submit()"
         expand="block"
         [disabled]="form.invalid || submitting"
-        >Gönder</ion-button
     >
+        <ion-spinner
+            *ngIf="submitting; else buttonText"
+            name="lines-sharp-small"
+        ></ion-spinner>
+        <ng-template #buttonText> Gönder </ng-template>
+    </ion-button>
 </ion-content>
