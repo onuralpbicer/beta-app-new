@@ -36,6 +36,7 @@
         "@ngrx/entity": "^16.2.0",
         "@ngrx/store": "^16.2.0",
         "@ngrx/store-devtools": "^16.2.0",
+        "@trapezedev/configure": "^7.0.10",
         "aws-amplify": "^5.3.11",
         "contentful": "^10.5.2",
         "ionicons": "^7.0.0",
