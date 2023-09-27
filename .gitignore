@@ -88,3 +88,9 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
+
+
+.angular
+www
+beta-app-keystore.jks
+android.json

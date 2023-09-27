@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">beta-app-new</string>
-    <string name="title_activity_main">beta-app-new</string>
-    <string name="package_name">io.ionic.starter</string>
-    <string name="custom_url_scheme">io.ionic.starter</string>
+    <string name="app_name">Beta bakım</string>
+    <string name="title_activity_main">Beta bakım</string>
+    <string name="package_name">com.beta.bakim.app</string>
+    <string name="custom_url_scheme">com.beta.bakim.app</string>
 </resources>
