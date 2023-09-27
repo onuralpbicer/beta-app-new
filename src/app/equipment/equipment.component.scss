@@ -21,6 +21,10 @@
     }
 }
 
+ion-button {
+    --box-shadow: none;
+}
+
 .maintenance-container {
     display: flex;
     justify-content: space-between;
