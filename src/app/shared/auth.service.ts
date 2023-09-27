@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core'
 import { Auth, Hub } from 'aws-amplify'
 import { CognitoUser } from 'amazon-cognito-identity-js'
-import { NavController } from '@ionic/angular'
+import { NavController, ToastController } from '@ionic/angular'
 import { CUSTOM_CHANNEL } from './types'
 import { DatastoreService } from './datastore.service'
+import { ToastService } from './toast.service'
+import { MESSAGES } from './messages'
 
 const requiresNewPasswordEvent = 'require-new-password'
 
@@ -14,12 +16,14 @@ export class AuthService {
     constructor(
         private navContoller: NavController,
         private datastore: DatastoreService,
+        private toastService: ToastService,
     ) {
         Hub.listen('auth', async ({ payload: { event, data } }) => {
             console.log('hub event', 'auth', event, data)
             switch (event) {
                 case 'signIn':
                     await this.datastore.init()
+                    this.toastService.showSuccessToast(MESSAGES.loginSuccess)
                     this.navContoller.navigateForward('home', {
                         replaceUrl: true,
                     })
@@ -27,11 +31,13 @@ export class AuthService {
 
                 case 'signIn_failure':
                     await this.datastore.stop()
+                    this.toastService.showErrorToast(MESSAGES.loginFail)
                     this.navContoller.navigateBack('login')
                     break
 
                 case 'signOut':
                     await this.datastore.stop()
+                    this.toastService.showSuccessToast(MESSAGES.logoutSuccess)
                     this.navContoller.navigateBack('login')
                     break
             }

@@ -25,6 +25,8 @@ import { IMaintenanceTask } from './model'
 import { Maintenance } from 'src/models'
 import { AuthService } from '../shared/auth.service'
 import { DatastoreService } from '../shared/datastore.service'
+import { ToastService } from '../shared/toast.service'
+import { MESSAGES } from '../shared/messages'
 
 @Component({
     selector: 'app-maintenance',
@@ -48,6 +50,7 @@ export class MaintenanceComponent implements OnInit, OnDestroy {
         private authService: AuthService,
         private datastore: DatastoreService,
         private navController: NavController,
+        private toastService: ToastService,
     ) {}
 
     ngOnInit(): void {
@@ -139,9 +142,11 @@ export class MaintenanceComponent implements OnInit, OnDestroy {
             .subscribe({
                 next: () => {
                     console.log('success')
+                    this.toastService.showSuccessToast(MESSAGES.submitSuccess)
                     this.navController.back()
                 },
                 error: (error) => {
+                    this.toastService.showErrorToast(MESSAGES.submitFail)
                     console.error(error)
                 },
                 complete: () => {
