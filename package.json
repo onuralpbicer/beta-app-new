@@ -12,7 +12,7 @@
         "lint": "ng lint",
         "ios": "npm run build && cap sync ios && cap open ios",
         "android": "npm run build && cap sync android && cap open android",
-        "appflow:build": "amplify init --y --envName $AMPLIFY_ENV && amplify push && if [ \"$CI_PLATFORM\" != \"web\" ]; then npx trapeze run appflow.yml -y --$CI_PLATFORM; fi && npm run build -- --configuration $TARGET_ENV",
+        "appflow:build": "if [ \"$CI_PLATFORM\" != \"web\" ]; then npx trapeze run appflow.yml -y --$CI_PLATFORM; fi && npm run build -- --configuration $TARGET_ENV",
         "amplify:maintenanceReportScheduler": "cd amplify/backend/function/maintenanceReportScheduler && tsc -p ./tsconfig.json && cd ../../../.."
     },
     "private": true,
