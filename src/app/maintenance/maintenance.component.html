@@ -38,11 +38,13 @@
                 [class.touched]="task.touched"
                 [class.valid]="task.valid"
             >
-                <h4>{{ i + 1 }}. {{ task.value.name }}</h4>
+                <div class="task-header">
+                    <h4>{{ i + 1 }}. {{ task.value.name }}</h4>
 
-                <app-triple-selector
-                    formControlName="uygun"
-                ></app-triple-selector>
+                    <app-triple-selector
+                        formControlName="uygun"
+                    ></app-triple-selector>
+                </div>
 
                 <ion-segment
                     formControlName="yapilanIs"

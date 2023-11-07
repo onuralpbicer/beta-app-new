@@ -7,6 +7,13 @@
 
     margin-bottom: 1rem;
 
+    .task-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
     h4 {
         margin-top: 0;
     }
