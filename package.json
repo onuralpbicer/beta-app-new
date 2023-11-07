@@ -58,7 +58,6 @@
         "@angular/language-service": "^16.2.12",
         "@aws-amplify/cli": "^12.4.0",
         "@capacitor/cli": "5.4.0",
-        "@ionic/angular-toolkit": "^9.0.0",
         "@ngrx/schematics": "^16.3.0",
         "@types/jasmine": "~4.3.0",
         "@types/node": "^12.11.1",
