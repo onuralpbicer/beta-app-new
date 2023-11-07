@@ -1,0 +1,15 @@
+<ion-segment
+    [value]="value"
+    (ionChange)="handleChange($event)"
+    [disabled]="disabled"
+>
+    <ion-segment-button [value]="true">
+        <ion-label><ion-icon name="checkmark-outline"></ion-icon></ion-label>
+    </ion-segment-button>
+    <ion-segment-button [value]="null" disabled="true">
+        <ion-label><ion-icon name="remove-outline"></ion-icon></ion-label>
+    </ion-segment-button>
+    <ion-segment-button [value]="false">
+        <ion-label><ion-icon name="close-outline"></ion-icon></ion-label>
+    </ion-segment-button>
+</ion-segment>

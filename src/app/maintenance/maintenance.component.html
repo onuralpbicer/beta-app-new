@@ -40,14 +40,9 @@
             >
                 <h4>{{ i + 1 }}. {{ task.value.name }}</h4>
 
-                <ion-segment formControlName="uygun">
-                    <ion-segment-button [value]="true">
-                        <ion-label>Uygun</ion-label>
-                    </ion-segment-button>
-                    <ion-segment-button [value]="false">
-                        <ion-label>Uygun Değil</ion-label>
-                    </ion-segment-button>
-                </ion-segment>
+                <app-triple-selector
+                    formControlName="uygun"
+                ></app-triple-selector>
 
                 <ion-segment
                     formControlName="yapilanIs"

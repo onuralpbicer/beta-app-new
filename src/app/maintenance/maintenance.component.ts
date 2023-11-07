@@ -30,13 +30,20 @@ import { DatastoreService } from '../shared/datastore.service'
 import { ToastService } from '../shared/toast.service'
 import { MESSAGES } from '../shared/messages'
 import { isNil } from 'rambda'
+import { TripleSelectorComponent } from '../triple-selector/triple-selector.component'
 
 @Component({
     selector: 'app-maintenance',
     templateUrl: './maintenance.component.html',
     styleUrls: ['./maintenance.component.scss'],
     standalone: true,
-    imports: [CommonModule, IonicModule, RouterModule, ReactiveFormsModule],
+    imports: [
+        CommonModule,
+        IonicModule,
+        RouterModule,
+        ReactiveFormsModule,
+        TripleSelectorComponent,
+    ],
 })
 export class MaintenanceComponent implements OnInit, OnDestroy {
     public form = this.fb.group({
@@ -102,7 +109,7 @@ export class MaintenanceComponent implements OnInit, OnDestroy {
 
                     const control = fg.controls['yapilanIs']
 
-                    if (value === true || value === 'true') {
+                    if (value === true) {
                         control.clearValidators()
                     } else {
                         control.addValidators(Validators.required)
