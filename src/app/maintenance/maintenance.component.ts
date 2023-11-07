@@ -10,6 +10,7 @@ import {
     map,
     switchMap,
     take,
+    throwError,
     withLatestFrom,
 } from 'rxjs'
 import { SyncService } from '../shared/sync.service'
@@ -17,6 +18,7 @@ import { IEquipmentFields } from '../shared/contentful'
 import {
     FormArray,
     FormBuilder,
+    FormControl,
     FormGroup,
     ReactiveFormsModule,
     Validators,
@@ -27,6 +29,7 @@ import { AuthService } from '../shared/auth.service'
 import { DatastoreService } from '../shared/datastore.service'
 import { ToastService } from '../shared/toast.service'
 import { MESSAGES } from '../shared/messages'
+import { isNil } from 'rambda'
 
 @Component({
     selector: 'app-maintenance',
@@ -36,7 +39,15 @@ import { MESSAGES } from '../shared/messages'
     imports: [CommonModule, IonicModule, RouterModule, ReactiveFormsModule],
 })
 export class MaintenanceComponent implements OnInit, OnDestroy {
-    public form!: FormGroup
+    public form = this.fb.group({
+        type: this.fb.nonNullable.control<string | null>(
+            null,
+            Validators.required,
+        ),
+        comments: this.fb.nonNullable.control<string | null>(null),
+        maintenanceTasks: this.fb.nonNullable.array<IMaintenanceTask>([]),
+    })
+
     public formSubscriptions: Array<Subscription> = []
 
     public equipment$$?: Subscription
@@ -54,12 +65,6 @@ export class MaintenanceComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        this.form = this.fb.group({
-            type: [null, Validators.required],
-            comments: [undefined],
-            maintenanceTasks: this.fb.array<IMaintenanceTask>([]),
-        })
-
         const equipment$ = this.activatedRoute.paramMap.pipe(
             map((params) => params.get('id')),
             filter(Boolean),
@@ -71,6 +76,8 @@ export class MaintenanceComponent implements OnInit, OnDestroy {
             .subscribe((maintenanceTasks) => {
                 this.initialiseForm(maintenanceTasks)
             })
+
+        this.form.valueChanges.subscribe(console.log)
     }
 
     public initialiseForm(maintenanceTasks: string[]) {
@@ -90,7 +97,7 @@ export class MaintenanceComponent implements OnInit, OnDestroy {
             })
 
             this.formSubscriptions.push(
-                fg.controls['uygun'].valueChanges.subscribe((value) => {
+                fg.controls.uygun.valueChanges.subscribe((value) => {
                     fg.markAsTouched()
 
                     const control = fg.controls['yapilanIs']
@@ -130,13 +137,16 @@ export class MaintenanceComponent implements OnInit, OnDestroy {
         ])
             .pipe(
                 switchMap(([equipmentId, username]) =>
-                    this.datastore.createMaintenance(
-                        equipmentId,
-                        this.form.value['maintenanceTasks'],
-                        username,
-                        this.form.value['type'],
-                        this.form.value['comments'] || undefined,
-                    ),
+                    isNil(this.form.value.type) ||
+                    isNil(this.form.value.comments)
+                        ? throwError(() => new Error())
+                        : this.datastore.createMaintenance(
+                              equipmentId,
+                              this.form.value.maintenanceTasks || [],
+                              username,
+                              this.form.value.type,
+                              this.form.value.comments || undefined,
+                          ),
                 ),
             )
             .subscribe({
@@ -156,6 +166,6 @@ export class MaintenanceComponent implements OnInit, OnDestroy {
     }
 
     get maintenanceTasks() {
-        return this.form.get('maintenanceTasks') as FormArray<FormGroup>
+        return this.form.controls.maintenanceTasks
     }
 }

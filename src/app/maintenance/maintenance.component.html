@@ -10,8 +10,8 @@
     <h2>Bakım Bilgileri</h2>
     <div
         class="task"
-        [class.touched]="form.controls['type'].touched"
-        [class.valid]="form.controls['type'].valid"
+        [class.touched]="form.controls.type.touched"
+        [class.valid]="form.controls.type.valid"
     >
         <ion-item>
             <ion-select
@@ -28,44 +28,48 @@
         </ion-item>
     </div>
     <h2>Yapılacak İşler</h2>
-    <ng-container *ngFor="let task of maintenanceTasks.controls; let i = index">
-        <div
-            class="task"
-            [class.touched]="task.touched"
-            [class.valid]="task.valid"
-            [formGroup]="task"
+    <ng-container formArrayName="maintenanceTasks">
+        <ng-container
+            *ngFor="let task of maintenanceTasks.controls; let i = index"
+            [formGroupName]="i"
         >
-            <h4>{{ i + 1 }}. {{ task.get('name')?.value }}</h4>
-
-            <ion-segment formControlName="uygun">
-                <ion-segment-button [value]="true">
-                    <ion-label>Uygun</ion-label>
-                </ion-segment-button>
-                <ion-segment-button [value]="false">
-                    <ion-label>Uygun Değil</ion-label>
-                </ion-segment-button>
-            </ion-segment>
-
-            <ion-segment
-                formControlName="yapilanIs"
-                *ngIf="(task.get('uygun')?.valueChanges | async) === false"
+            <div
+                class="task"
+                [class.touched]="task.touched"
+                [class.valid]="task.valid"
             >
-                <ion-segment-button value="Onarıldı">
-                    <ion-label>Onarıldı</ion-label>
-                </ion-segment-button>
-                <ion-segment-button value="Yenilendi">
-                    <ion-label>Yenilendi</ion-label>
-                </ion-segment-button>
-            </ion-segment>
+                <h4>{{ i + 1 }}. {{ task.value.name }}</h4>
 
-            <ion-item>
-                <ion-input
-                    formControlName="description"
-                    label="Açıklama"
-                    labelPlacement="stacked"
-                ></ion-input>
-            </ion-item>
-        </div>
+                <ion-segment formControlName="uygun">
+                    <ion-segment-button [value]="true">
+                        <ion-label>Uygun</ion-label>
+                    </ion-segment-button>
+                    <ion-segment-button [value]="false">
+                        <ion-label>Uygun Değil</ion-label>
+                    </ion-segment-button>
+                </ion-segment>
+
+                <ion-segment
+                    formControlName="yapilanIs"
+                    *ngIf="task.value.uygun === false"
+                >
+                    <ion-segment-button value="Onarıldı">
+                        <ion-label>Onarıldı</ion-label>
+                    </ion-segment-button>
+                    <ion-segment-button value="Yenilendi">
+                        <ion-label>Yenilendi</ion-label>
+                    </ion-segment-button>
+                </ion-segment>
+
+                <ion-item>
+                    <ion-input
+                        formControlName="description"
+                        label="Açıklama"
+                        labelPlacement="stacked"
+                    ></ion-input>
+                </ion-item>
+            </div>
+        </ng-container>
     </ng-container>
 
     <div class="task">
