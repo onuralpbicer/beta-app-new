@@ -140,5 +140,11 @@
         "schematicCollections": ["@ngrx/schematics"],
         "analytics": false
     },
-    "schematics": {}
+    "schematics": {
+        "@schematics/angular:component": {
+            "standalone": true,
+            "style": "scss",
+            "skipTests": true
+        }
+    }
 }
