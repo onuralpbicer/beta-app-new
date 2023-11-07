@@ -21,7 +21,9 @@ import { SettingsEffects } from './settings/settings.effects'
     declarations: [AppComponent],
     imports: [
         BrowserModule,
-        IonicModule.forRoot(),
+        IonicModule.forRoot({
+            mode: 'md',
+        }),
         AppRoutingModule,
         StoreModule.forRoot(reducers, { metaReducers }),
         !environment.production ? StoreDevtoolsModule.instrument() : [],
