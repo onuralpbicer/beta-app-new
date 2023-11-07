@@ -50,5 +50,48 @@
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
     }
+  },
+  "function": {
+    "maintenanceReportScheduler": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ],
+          "category": "api",
+          "resourceName": "betaapp"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_maintenanceReportScheduler_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "maintenanceReportScheduler"
+        }
+      ]
+    },
+    "AMPLIFY_function_maintenanceReportScheduler_reportRecipient": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "maintenanceReportScheduler"
+        }
+      ]
+    },
+    "AMPLIFY_function_maintenanceReportScheduler_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "maintenanceReportScheduler"
+        }
+      ]
+    }
   }
 }

@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "api": {
+      "betaapp": [
+        "Query"
+      ]
+    }
+  },
+  "lambdaLayers": [],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "reportRecipient",
+      "environmentVariableName": "REPORT_RECIPIENT"
+    }
+  ]
+}

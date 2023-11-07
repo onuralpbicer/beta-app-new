@@ -89,6 +89,7 @@ amplifytools.xcconfig
 **.sample
 #amplify-do-not-edit-end
 
+amplify/backend/function/*/src/index.js
 
 .angular
 www

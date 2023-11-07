@@ -12,7 +12,8 @@
         "lint": "ng lint",
         "ios": "npm run build && cap sync ios && cap open ios",
         "android": "npm run build && cap sync android && cap open android",
-        "appflow:build": "amplify init --y --envName $AMPLIFY_ENV && amplify push && if [ \"$CI_PLATFORM\" != \"web\" ]; then npx trapeze run appflow.yml -y --$CI_PLATFORM; fi && npm run build -- --configuration $TARGET_ENV"
+        "appflow:build": "amplify init --y --envName $AMPLIFY_ENV && amplify push && if [ \"$CI_PLATFORM\" != \"web\" ]; then npx trapeze run appflow.yml -y --$CI_PLATFORM; fi && npm run build -- --configuration $TARGET_ENV",
+        "amplify:maintenanceReportScheduler": "cd amplify/backend/function/maintenanceReportScheduler && tsc -p ./tsconfig.json && cd ../../../.."
     },
     "private": true,
     "dependencies": {
@@ -38,6 +39,7 @@
         "@ngrx/store-devtools": "^16.3.0",
         "@trapezedev/configure": "^7.0.10",
         "aws-amplify": "^5.3.11",
+        "aws-lambda": "^1.0.7",
         "contentful": "^10.5.2",
         "ionicons": "^7.0.0",
         "ngrx-store-localstorage": "^16.0.0",
@@ -59,6 +61,7 @@
         "@aws-amplify/cli": "^12.4.0",
         "@capacitor/cli": "5.4.0",
         "@ngrx/schematics": "^16.3.0",
+        "@types/aws-lambda": "^8.10.126",
         "@types/jasmine": "~4.3.0",
         "@types/node": "^12.11.1",
         "@typescript-eslint/eslint-plugin": "5.3.0",

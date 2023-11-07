@@ -17,6 +17,13 @@
       },
       "api": {
         "betaapp": {}
+      },
+      "function": {
+        "maintenanceReportScheduler": {
+          "reportRecipient": "onuralpbicer+noreply@gmail.com",
+          "deploymentBucketName": "amplify-betaapp-dev-193232-deployment",
+          "s3Key": "amplify-builds/maintenanceReportScheduler-614d3261594753627936-build.zip"
+        }
       }
     }
   }
